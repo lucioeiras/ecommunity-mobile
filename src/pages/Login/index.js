@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { AsyncStorage } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+
+import useAuth from '../../hooks/useAuth'
 
 import logoImg from '../../assets/logo.png'
 import googleImg from '../../assets/google.png'
@@ -19,13 +22,29 @@ import {
 export default function Login() {
   const { navigate } = useNavigation()
 
-  function loginWithGoogle() {
+  const { handleSignIn } = useAuth()
+
+  async function handleSignInWithGoogle() {
+    await handleSignIn()
+
     navigate('Home')
   }
 
-  function loginWithTwitter() {
+  async function handleSignInWithTwitter() {
+    await handleSignIn('twitter')
+
     navigate('Home')
   }
+
+  useEffect(() => {
+    (async () => {
+      const user_id = await AsyncStorage.getItem('user_id')
+
+      if (user_id) {
+        navigate('Home')
+      }
+    })()
+  }, [])
 
   return (
     <Container>
@@ -34,12 +53,12 @@ export default function Login() {
       <Title>Bem vindo ao <Ecommunity>E-Community</Ecommunity></Title>
       <Description>A maior comunidade de eletrônica do Brasil</Description>
 
-      <LoginButton login="google" onPress={loginWithGoogle}>
+      <LoginButton login="google" onPress={handleSignInWithGoogle}>
         <LoginIcon source={googleImg} />
         <LoginLabel>Entrar com o Google</LoginLabel>
       </LoginButton>
 
-      <LoginButton login="twitter" onPress={loginWithTwitter}>
+      <LoginButton login="twitter" onPress={handleSignInWithTwitter}>
         <LoginIcon source={twitterImg} />
         <LoginLabel>Entrar com o Twitter</LoginLabel>
       </LoginButton>
