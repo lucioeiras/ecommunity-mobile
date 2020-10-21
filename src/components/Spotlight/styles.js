@@ -1,5 +1,5 @@
 import styled from 'styled-components/native'
-import { LinearGradient } from 'expo-linear-gradient'
+
 
 export const Container = styled.ImageBackground`
   width: 100%;
@@ -7,16 +7,6 @@ export const Container = styled.ImageBackground`
 
   overflow: hidden;
   border-radius: 5px;
-  
-  margin-top: 16px;
-`
-
-export const Gradient = styled(LinearGradient)`
-  width: 100%;
-  height: 327px;
-
-  justify-content: flex-end;
-  padding: 16px;
 `
 
 export const Title = styled.Text`
