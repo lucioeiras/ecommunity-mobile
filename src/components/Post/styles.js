@@ -20,8 +20,10 @@ export const Thumb = styled.Image`
 `
 
 export const Title = styled.Text`
+  max-width: 250px;
+
   color: #737380;
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'Roboto_500Medium';
 
   margin-bottom: 8px;
