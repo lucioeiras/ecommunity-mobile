@@ -1,9 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-
-import avatar from '../../assets/eu.jpeg'
-import firebaseImg from '../../assets/firebase.png'
 
 import { 
   Container as Content, 

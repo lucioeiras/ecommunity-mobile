@@ -63,25 +63,14 @@ export default function Home() {
       <SpotlightContainer>
         <Subtitle>Destaque</Subtitle>
 
-        {spotlightPost && (
-          <Spotlight 
-            post={spotlightPost}
-            userID={spotlightPost.user_id}
-          />
-        )}
+        {spotlightPost && <Spotlight post={spotlightPost} />}
       </SpotlightContainer>
 
       <LastContainer>
         <Subtitle>Últimas adicionadas</Subtitle>
 
         <View>
-          {!!lastPosts && lastPosts.map(post => (
-            <Post 
-              key={post.uid}
-              post={post}
-              userID={post.user_id}
-            />  
-          ))}
+          {!!lastPosts && lastPosts.map(post => <Post key={post.uid} post={post} /> )}
         </View>
       </LastContainer>
     </Container>
