@@ -6,7 +6,7 @@ import firebase from 'firebase/app'
 
 import { Container, Thumb, Title, User } from './styles'
 
-export default function Post({ post, userID }) {
+export default function Post({ post }) {
   const firestore = firebase.firestore()
 
   const postsRef = firestore.collection('posts')
@@ -17,7 +17,7 @@ export default function Post({ post, userID }) {
   const { navigate } = useNavigation()
 
   useEffect(() => {
-    usersRef.doc(userID).get().then(doc => setUser(doc.data()))
+    usersRef.doc(post.user_id).get().then(doc => setUser(doc.data()))
   }, [])
   
   async function handleOpenPost() {

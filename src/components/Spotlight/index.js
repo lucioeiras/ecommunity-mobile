@@ -14,7 +14,7 @@ import {
   Username,
 } from './styles'
 
-export default function Spotlight({ post, userID }) {
+export default function Spotlight({ post }) {
   const firestore = firebase.firestore()
   const usersRef = firestore.collection('users')
 
@@ -23,7 +23,7 @@ export default function Spotlight({ post, userID }) {
   const [user, setUser] = useState()
 
   useEffect(() => {
-    usersRef.doc(userID).get().then(doc => setUser(doc.data()))
+    usersRef.doc(post.user_id).get().then(doc => setUser(doc.data()))
   }, [])
   
   function handleOpenPost() {
