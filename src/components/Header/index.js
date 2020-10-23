@@ -7,8 +7,7 @@ import firebase from 'firebase/app'
 import { Hint } from '../../styles/global'
 
 import { 
-  Container, 
-  Profile,
+  Container,
   Avatar,
   User,
 } from './styles'
@@ -38,27 +37,26 @@ export default function Header() {
 
   return (
     <Container>
+      {user && (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={handleProfile}>
+            <Avatar source={{ uri: user.avatar }} />
+          </TouchableOpacity>
+
+          <View>
+            <User>{user.name}</User>
+            <Hint textColor="#A8A8B3">Clique para ver o seu perfil</Hint>
+          </View>
+        </View>
+      )}
+
       <TouchableOpacity onPress={handleNavigateBack}>
         <MaterialIcons 
           name="arrow-back" 
           color="#3A3A3A" 
           size={24} 
-          style={{ marginRight: 16 }}
         />
       </TouchableOpacity>
-      
-      {user && (
-        <View style={{ flexDirection: 'row' }}>
-          <Profile>
-            <User>{user.name}</User>
-            <Hint textColor="#A8A8B3">Clique para ver o seu perfil</Hint>
-          </Profile>
-
-          <TouchableOpacity onPress={handleProfile}>
-            <Avatar source={{ uri: user.avatar }} />
-          </TouchableOpacity>
-        </View>
-      )}
     </Container>
   )
 }

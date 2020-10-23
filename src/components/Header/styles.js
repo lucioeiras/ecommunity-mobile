@@ -9,10 +9,6 @@ export const Container = styled.View`
   padding-top: 24px;
 `
 
-export const Profile = styled.View`
-  align-items: flex-end;
-`
-
 export const Avatar = styled.Image`
   width: 50px;
   height: 50px;
@@ -20,7 +16,7 @@ export const Avatar = styled.Image`
   overflow: hidden;
   border-radius: 25px;
 
-  margin-left: 16px;
+  margin-right: 16px;
 `
 
 export const User = styled.Text`
