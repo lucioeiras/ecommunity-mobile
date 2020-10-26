@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
+import { AppLoading } from 'expo'
 
 import firebase from 'firebase/app'
 
@@ -22,8 +23,11 @@ export default function Home() {
 
   const [lastPosts, setLastPosts] = useState()
   const [spotlightPost, setSpotlightPost] = useState()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+
     postsRef
       .orderBy('clicks', 'desc')
       .limit(1)
@@ -35,9 +39,13 @@ export default function Home() {
         
         setSpotlightPost(searchedPosts[0])
       })
+
+    setLoading(false)
   }, [])
 
   useEffect(() => {
+    setLoading(true)
+
     postsRef
       .orderBy('createdAt', 'desc')
       .limit(20)
@@ -49,30 +57,39 @@ export default function Home() {
         
         setLastPosts(searchedPosts)
       })
+
+    setLoading(false)
   }, [])
 
   return (
     <Container>
-      <Header />
+      {loading
+        ? <AppLoading />
+        : (
+          <>
+          <Header />
 
-      <SearchContainer>
-        <Title>Encontre um novo conhecimento</Title>
-        <SearchBar />
-      </SearchContainer>
+          <SearchContainer>
+            <Title>Encontre um novo conhecimento</Title>
+            <SearchBar />
+          </SearchContainer>
 
-      <SpotlightContainer>
-        <Subtitle>Destaque</Subtitle>
+          <SpotlightContainer>
+            <Subtitle>Destaque</Subtitle>
 
-        {spotlightPost && <Spotlight post={spotlightPost} />}
-      </SpotlightContainer>
+            {spotlightPost && <Spotlight post={spotlightPost} />}
+          </SpotlightContainer>
 
-      <LastContainer>
-        <Subtitle>Últimas adicionadas</Subtitle>
+          <LastContainer>
+            <Subtitle>Últimas adicionadas</Subtitle>
 
-        <View>
-          {!!lastPosts && lastPosts.map(post => <Post key={post.uid} post={post} /> )}
-        </View>
-      </LastContainer>
+            <View>
+              {!!lastPosts && lastPosts.map(post => <Post key={post.uid} post={post} /> )}
+            </View>
+          </LastContainer>
+          </>
+        )
+      }
     </Container>
   )
 }

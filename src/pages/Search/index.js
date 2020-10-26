@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { AppLoading } from 'expo'
 
 import firebase from 'firebase/app'
 
@@ -24,8 +25,11 @@ export default function Search({ route }) {
 
   const [bestResult, setBestResult] = useState()
   const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+
     postsRef.get().then(querySnapshot => {
       const searchedPosts = []
   
@@ -42,34 +46,43 @@ export default function Search({ route }) {
 
       setResults(searchedPosts)
     })
+
+    setLoading(false)
   }, [searched])
 
   return (
     <Container>
-      <Header />
+      {loading
+        ? <AppLoading />
+        : (
+          <>
+          <Header />
 
-      <SearchContainer>
-        <Title>Resultados da sua pesquisa</Title>
-        <SearchBar value={searched} />
-      </SearchContainer>
+          <SearchContainer>
+            <Title>Resultados da sua pesquisa</Title>
+            <SearchBar value={searched} />
+          </SearchContainer>
 
-      {!!bestResult && (
-        <SpotlightContainer>
-          <Subtitle>Melhor Resultado</Subtitle>
+          {!!bestResult && (
+            <SpotlightContainer>
+              <Subtitle>Melhor Resultado</Subtitle>
 
-          <Spotlight post={bestResult} />
-        </SpotlightContainer>
-      )}
+              <Spotlight post={bestResult} />
+            </SpotlightContainer>
+          )}
 
-      {!!results && !!results[0] && (
-        <ResultsContainer>
-          <Subtitle>Mais resultados</Subtitle>
+          {!!results && !!results[0] && (
+            <ResultsContainer>
+              <Subtitle>Mais resultados</Subtitle>
 
-          <ResultsPostsList>
-            {results.map(result => <Post key={result.uid} post={result}/>)}
-          </ResultsPostsList>
-        </ResultsContainer>
-      )}
+              <ResultsPostsList>
+                {results.map(result => <Post key={result.uid} post={result}/>)}
+              </ResultsPostsList>
+            </ResultsContainer>
+          )}
+          </>
+        )
+      }
     </Container>
   )
 }

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AsyncStorage } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { AppLoading } from 'expo'
 
 import useAuth from '../../hooks/useAuth'
 
@@ -24,16 +25,22 @@ export default function Login() {
 
   const { handleSignIn } = useAuth()
 
+  const [loading, setLoading] = useState(false)
+
   async function handleSignInWithGoogle() {
     await handleSignIn()
+    setLoading(true)
 
     navigate('Home')
+    setLoading(false)
   }
 
   async function handleSignInWithTwitter() {
-    await handleSignIn('twitter')
-
+    await handleSignIn()
+    setLoading(true)
+    
     navigate('Home')
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -48,20 +55,27 @@ export default function Login() {
 
   return (
     <Container>
-      <Logo source={logoImg} />
+      {loading 
+        ? <AppLoading />
+        : (
+          <>
+          <Logo source={logoImg} />
 
-      <Title>Bem vindo ao <Ecommunity>E-Community</Ecommunity></Title>
-      <Description>A maior comunidade de eletrônica do Brasil</Description>
+          <Title>Bem vindo ao <Ecommunity>E-Community</Ecommunity></Title>
+          <Description>A maior comunidade de eletrônica do Brasil</Description>
 
-      <LoginButton login="google" onPress={handleSignInWithGoogle}>
-        <LoginIcon source={googleImg} />
-        <LoginLabel>Entrar com o Google</LoginLabel>
-      </LoginButton>
+          <LoginButton login="google" onPress={handleSignInWithGoogle}>
+            <LoginIcon source={googleImg} />
+            <LoginLabel>Entrar com o Google</LoginLabel>
+          </LoginButton>
 
-      <LoginButton login="twitter" onPress={handleSignInWithTwitter}>
-        <LoginIcon source={twitterImg} />
-        <LoginLabel>Entrar com o Twitter</LoginLabel>
-      </LoginButton>
+          <LoginButton login="twitter" onPress={handleSignInWithTwitter}>
+            <LoginIcon source={twitterImg} />
+            <LoginLabel>Entrar com o Twitter</LoginLabel>
+          </LoginButton>
+          </>
+        )
+      }
     </Container>
   )
 }
