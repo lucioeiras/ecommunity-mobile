@@ -64,6 +64,8 @@ export const Link = styled(RectButton)`
 `
 
 export const Linkname = styled.Text`
+  width: 1000px;
+
   color: #656565;
   font-size: 16px;
   font-family: 'Roboto_500Medium';

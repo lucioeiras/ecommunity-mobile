@@ -24,6 +24,7 @@ import {
   File,
   Filename,
 } from './styles'
+import { Linking } from 'react-native'
 
 export default function Read({ route }) {
   const { post, user } = route.params
@@ -55,7 +56,10 @@ export default function Read({ route }) {
               <Subtitle>Links</Subtitle>
               <LinkList>
                 {post.links.map(link => (
-                  <Link key={link}>
+                  <Link 
+                    key={link}
+                    onPress={() => Linking.openURL(link)}
+                  >
                     <MaterialIcons name="public" color="#656565" size={20} />
                     <Linkname>{link}</Linkname>
                   </Link>
@@ -69,7 +73,10 @@ export default function Read({ route }) {
               <Subtitle>Arquivos</Subtitle>
               <FilesList>
                 {post.filesURL.map((file, index) => (
-                  <File key={index}>
+                  <File 
+                    key={index}
+                    onPress={() => Linking.openURL(file)}
+                  >
                     <MaterialIcons 
                       name="insert-drive-file" 
                       color="#656565" 
