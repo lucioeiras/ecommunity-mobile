@@ -36,7 +36,7 @@ export default function Search({ route }) {
       querySnapshot.forEach(doc => {
         const post = doc.data()
   
-        if (post.text.includes(searched) || post.title.includes(searched)) {
+        if (post.title.includes(searched) || post.text.includes(searched)) {
           searchedPosts.push(post)
         }
       })
@@ -51,38 +51,34 @@ export default function Search({ route }) {
   }, [searched])
 
   return (
+    <>
+    {loading && <AppLoading />}
     <Container>
-      {loading
-        ? <AppLoading />
-        : (
-          <>
-          <Header />
+      <Header />
 
-          <SearchContainer>
-            <Title>Resultados da sua pesquisa</Title>
-            <SearchBar value={searched} />
-          </SearchContainer>
+      <SearchContainer>
+        <Title>Resultados da sua pesquisa</Title>
+        <SearchBar value={searched} />
+      </SearchContainer>
 
-          {!!bestResult && (
-            <SpotlightContainer>
-              <Subtitle>Melhor Resultado</Subtitle>
+      {!!bestResult && (
+        <SpotlightContainer>
+          <Subtitle>Melhor Resultado</Subtitle>
 
-              <Spotlight post={bestResult} />
-            </SpotlightContainer>
-          )}
+          <Spotlight post={bestResult} />
+        </SpotlightContainer>
+      )}
 
-          {!!results && !!results[0] && (
-            <ResultsContainer>
-              <Subtitle>Mais resultados</Subtitle>
+      {!!results && !!results[0] && (
+        <ResultsContainer>
+          <Subtitle>Mais resultados</Subtitle>
 
-              <ResultsPostsList>
-                {results.map(result => <Post key={result.uid} post={result}/>)}
-              </ResultsPostsList>
-            </ResultsContainer>
-          )}
-          </>
-        )
-      }
+          <ResultsPostsList>
+            {results.map(result => <Post key={result.uid} post={result}/>)}
+          </ResultsPostsList>
+        </ResultsContainer>
+      )}
     </Container>
+    </>
   )
 }

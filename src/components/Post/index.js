@@ -21,7 +21,8 @@ export default function Post({ post }) {
   }, [])
   
   async function handleOpenPost() {
-    post.clicks += 1
+    post.clicks = post.clicks ? post.clicks + 1 : 1
+    
     await postsRef.doc(post.uid).set(post)
 
     navigate('Read', { post, user })

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
 import { AppLoading } from 'expo'
+import { View } from 'react-native'
 
 import firebase from 'firebase/app'
 
@@ -23,11 +23,9 @@ export default function Home() {
 
   const [lastPosts, setLastPosts] = useState()
   const [spotlightPost, setSpotlightPost] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    setLoading(true)
-
+  function loadPosts() {
     postsRef
       .orderBy('clicks', 'desc')
       .limit(1)
@@ -40,15 +38,8 @@ export default function Home() {
         setSpotlightPost(searchedPosts[0])
       })
 
-    setLoading(false)
-  }, [])
-
-  useEffect(() => {
-    setLoading(true)
-
     postsRef
       .orderBy('createdAt', 'desc')
-      .limit(20)
       .get()
       .then(querySnapshot => {
         const searchedPosts = []
@@ -59,37 +50,37 @@ export default function Home() {
       })
 
     setLoading(false)
+  }
+
+  useEffect(() => {
+    loadPosts()
   }, [])
 
   return (
-    <Container>
-      {loading
-        ? <AppLoading />
-        : (
-          <>
-          <Header />
+    <>
+    {loading && <AppLoading />}
+    <Container onScrollBeginDrag={loadPosts}>
+      <Header />
 
-          <SearchContainer>
-            <Title>Encontre um novo conhecimento</Title>
-            <SearchBar />
-          </SearchContainer>
+      <SearchContainer>
+        <Title>Encontre um novo conhecimento</Title>
+        <SearchBar />
+      </SearchContainer>
 
-          <SpotlightContainer>
-            <Subtitle>Destaque</Subtitle>
+      <SpotlightContainer>
+        <Subtitle>Destaque</Subtitle>
 
-            {spotlightPost && <Spotlight post={spotlightPost} />}
-          </SpotlightContainer>
+        {spotlightPost && <Spotlight post={spotlightPost} />}
+      </SpotlightContainer>
 
-          <LastContainer>
-            <Subtitle>Últimas adicionadas</Subtitle>
+      <LastContainer>
+        <Subtitle>Últimas adicionadas</Subtitle>
 
-            <View>
-              {!!lastPosts && lastPosts.map(post => <Post key={post.uid} post={post} /> )}
-            </View>
-          </LastContainer>
-          </>
-        )
-      }
+        <View>
+          {!!lastPosts && lastPosts.map(post => <Post key={post.uid} post={post} /> )}
+        </View>
+      </LastContainer>
     </Container>
+    </>
   )
 }

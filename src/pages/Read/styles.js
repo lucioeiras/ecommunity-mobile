@@ -8,7 +8,7 @@ export const Container = styled.ScrollView`
 
 export const Header = styled.ImageBackground`
   height: 327px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 `
 
 export const Profile = styled.View`

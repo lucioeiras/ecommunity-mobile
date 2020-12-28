@@ -15,6 +15,7 @@ export const Container = styled.View`
 
 export const Input = styled.TextInput`
   height: 50px;
+  width: 100%;
 
   color: #737380;
   font-size: 16px;

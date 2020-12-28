@@ -54,28 +54,24 @@ export default function Login() {
   }, [])
 
   return (
+    <>
+    {loading && <AppLoading />}
     <Container>
-      {loading 
-        ? <AppLoading />
-        : (
-          <>
-          <Logo source={logoImg} />
+      <Logo source={logoImg} resizeMode="center" />
 
-          <Title>Bem vindo ao <Ecommunity>E-Community</Ecommunity></Title>
-          <Description>A maior comunidade de eletrônica do Brasil</Description>
+      <Title>Bem vindo ao <Ecommunity>E-Community</Ecommunity></Title>
+      <Description>A maior comunidade de eletrônica do Brasil</Description>
 
-          <LoginButton login="google" onPress={handleSignInWithGoogle}>
-            <LoginIcon source={googleImg} />
-            <LoginLabel>Entrar com o Google</LoginLabel>
-          </LoginButton>
+      <LoginButton login="google" onPress={handleSignInWithGoogle}>
+        <LoginIcon source={googleImg} />
+        <LoginLabel>Entrar com o Google</LoginLabel>
+      </LoginButton>
 
-          <LoginButton login="twitter" onPress={handleSignInWithTwitter}>
-            <LoginIcon source={twitterImg} />
-            <LoginLabel>Entrar com o Twitter</LoginLabel>
-          </LoginButton>
-          </>
-        )
-      }
+      <LoginButton login="twitter" onPress={handleSignInWithTwitter}>
+        <LoginIcon source={twitterImg} />
+        <LoginLabel>Entrar com o Twitter</LoginLabel>
+      </LoginButton>
     </Container>
+    </>
   )
 }
